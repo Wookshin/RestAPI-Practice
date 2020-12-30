@@ -1,161 +1,70 @@
-@REM ----------------------------------------------------------------------------
-@REM Licensed to the Apache Software Foundation (ASF) under one
-@REM or more contributor license agreements.  See the NOTICE file
-@REM distributed with this work for additional information
-@REM regarding copyright ownership.  The ASF licenses this file
-@REM to you under the Apache License, Version 2.0 (the
-@REM "License"); you may not use this file except in compliance
-@REM with the License.  You may obtain a copy of the License at
-@REM
-@REM    https://www.apache.org/licenses/LICENSE-2.0
-@REM
-@REM Unless required by applicable law or agreed to in writing,
-@REM software distributed under the License is distributed on an
-@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-@REM KIND, either express or implied.  See the License for the
-@REM specific language governing permissions and limitations
-@REM under the License.
-@REM ----------------------------------------------------------------------------
+[유사 배열 객체] 
+ - []로 감싸져있지만 배열이 아닌 친구
+ - array instanceof Array 판단 가능
+ - 유사배열의 경우 배열의 메서드를 쓸 수 없다.
+ - 이럴 경우 메서드를 빌려 쓰는 방법 : call이나 apply(배열 프로토타입에서 forEach 메서드를 빌려옴 )
+   ex) [].forEach.call(yoosa, function(x) { console.log(x); });
+ - 최신 자바스크립트에서는 Array.from으로 더 간단하게 할 수 있음
+   ex) Array.from(yoosa).forEach(function(x){console.log(x);});
+ 
+[지역변수, 전역변수, 변수 Scope] 
+ - 자바스크립트에서는 중괄호'{}'로 감싼 코드를 블록문(Block Statement)라고 부른다. 
+ - 그 블록문 안에 선언된 변수를 로컬 변수 혹은 지역 변수(Local variable)라고 부른다. 
+ - 로컬변수는 블록문 내에서만 사용할 수 있는 변수이다. 
+ - 블록문 밖에서 선언한 변수는 블록문 안에서도 사용할 수 있는데 이런 변수를 글로벌 변수 혹은 전역 변수라고 부른다. 
+ 
+[1종 객체 정의] 
+ - 일급 객체(영어: first-class object)란 다른 객체들에 일반적으로 적용 가능한 연산을 모두 지원하는 객체
+ - 일급 시민(first-class citizen 혹은 type,object,entity, value 라고도 합니다.)이란 무슨 혜택을 받는다는 게 아니라, 
+   사용할 때 다른 요소들과 아무런 차별이 없다는 것을 뜻합니다. (No “arbitrary” restrictions apply to their use)
+ 1) 모든 일급 객체는 함수의 실질적인 매개변수가 될 수 있다.
+ 2) 모든 일급 객체는 함수의 반환값이 될 수 있다.
+ 3) 모든 일급 객체는 할당의 대상이 될 수 있다.
+ 4) 모든 일급 객체는 비교 연산(==, equal)을 적용할 수 있다.
+ - type을 전달, 반환 및 할당할 수 있으면 해당 type을 1급 객체로 간주한다.
+ - https://medium.com/@soeunlee/javascript%EC%97%90%EC%84%9C-%EC%99%9C-%ED%95%A8%EC%88%98%EA%B0%80-1%EA%B8%89-%EA%B0%9D%EC%B2%B4%EC%9D%BC%EA%B9%8C%EC%9A%94-cc6bd2a9ecac
+ 1) 함수를 변수나 데이타에 할당 할 수 있다.
+ 2) 함수를 인자로 전달 할 수 있다.
+ 3) 함수를 리턴 할수 있다.
+ 
+[함수형 언어의 특징] 
+ - 불변성 : 함수형 프로그래밍 언어는 불변성을 지향하는 언어 패러다임이다. 즉, 변경 가능한 상태를 제거하려고 노력한 프로그래밍 언어라는 것.
+			순수 함수를 지향하는 프로그래밍 언어. 순수함수란 내부상태를 갖지않아, 같은 입력에 대해 항상 같은 출력이 보장되는 함수이다. 부작용이 없는 함수. 
+	이로 인한 장점으로는 
+	1) 프로그램 검증이 쉬워진다. -> 프로그래밍을 구성하는 모듈들이 오직 입력 값의 영향만 받기 때문에 테스트코드 작성이 쉽다. 
+	2) 최적화가 가능해진다. -> 이전에 계산한 함수 값을 캐싱 및 메모이제이션하는건 불변성이 있어야 가능한 일. 
+	3) 동시성 프로그래밍을 작성하기 쉬워진다. -> 동시성이 어려운 이유는 여러 스레드들이 프로그램 상태를 공유하기 때문에. 
+ - 1급 객체
+ - 지연 연산 (Lazy evaluation)
+ - https://engineering.linecorp.com/ko/blog/functional-programing-language-and-line-game-cloud/
+ - https://evan-moon.github.io/2020/09/27/work-life-balance/
+ 
+[Node.js 개요] 
 
-@REM ----------------------------------------------------------------------------
-@REM Maven2 Start Up Batch script
-@REM
-@REM Required ENV vars:
-@REM JAVA_HOME - location of a JDK home dir
-@REM
-@REM Optional ENV vars
-@REM M2_HOME - location of maven2's installed home dir
-@REM MAVEN_BATCH_ECHO - set to 'on' to enable the echoing of the batch commands
-@REM MAVEN_BATCH_PAUSE - set to 'on' to wait for a key stroke before ending
-@REM MAVEN_OPTS - parameters passed to the Java VM when running Maven
-@REM     e.g. to debug Maven itself, use
-@REM set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
-@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc files
-@REM ----------------------------------------------------------------------------
+[Node.js static 웹서버 개발] 
 
-@REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
-@echo off
-@REM set title of command window
-title %0
-@REM enable echoing my setting MAVEN_BATCH_ECHO to 'on'
-@if "%MAVEN_BATCH_ECHO%" == "on"  echo %MAVEN_BATCH_ECHO%
+[Ajax 개요 - Ajax 함수 개발] 
 
-@REM set %HOME% to equivalent of $HOME
-if "%HOME%" == "" (set "HOME=%HOMEDRIVE%%HOMEPATH%")
+[Node.js dynamic 웹서버 개발] 
 
-@REM Execute a user defined script before this one
-if not "%MAVEN_SKIP_RC%" == "" goto skipRcPre
-@REM check for pre script, once with legacy .bat ending and once with .cmd ending
-if exist "%HOME%\mavenrc_pre.bat" call "%HOME%\mavenrc_pre.bat"
-if exist "%HOME%\mavenrc_pre.cmd" call "%HOME%\mavenrc_pre.cmd"
-:skipRcPre
+[Ajax 함수 개발] 
 
-@setlocal
+[Ajax와 jQuery, prototype.js] 
 
-set ERROR_CODE=0
+[메모이제이션, 오버로딩] 
 
-@REM To isolate internal variables from possible post scripts, we use another setlocal
-@setlocal
+[함수의 prototype 속성] 
 
-@REM ==== START VALIDATION ====
-if not "%JAVA_HOME%" == "" goto OkJHome
+[클래스 기반의 상속] 
 
-echo.
-echo Error: JAVA_HOME not found in your environment. >&2
-echo Please set the JAVA_HOME variable in your environment to match the >&2
-echo location of your Java installation. >&2
-echo.
-goto error
 
-:OkJHome
-if exist "%JAVA_HOME%\bin\java.exe" goto init
 
-echo.
-echo Error: JAVA_HOME is set to an invalid directory. >&2
-echo JAVA_HOME = "%JAVA_HOME%" >&2
-echo Please set the JAVA_HOME variable in your environment to match the >&2
-echo location of your Java installation. >&2
-echo.
-goto error
 
-@REM ==== END VALIDATION ====
 
-:init
 
-@REM Find the project base dir, i.e. the directory that contains the folder ".mvn".
-@REM Fallback to current working directory if not found.
 
-set MAVEN_PROJECTBASEDIR=%MAVEN_BASEDIR%
-IF NOT "%MAVEN_PROJECTBASEDIR%"=="" goto endDetectBaseDir
 
-set EXEC_DIR=%CD%
-set WDIR=%EXEC_DIR%
-:findBaseDir
-IF EXIST "%WDIR%"\.mvn goto baseDirFound
-cd ..
-IF "%WDIR%"=="%CD%" goto baseDirNotFound
-set WDIR=%CD%
-goto findBaseDir
 
-:baseDirFound
-set MAVEN_PROJECTBASEDIR=%WDIR%
-cd "%EXEC_DIR%"
-goto endDetectBaseDir
 
-:baseDirNotFound
-set MAVEN_PROJECTBASEDIR=%EXEC_DIR%
-cd "%EXEC_DIR%"
 
-:endDetectBaseDir
 
-IF NOT EXIST "%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config" goto endReadAdditionalConfig
-
-@setlocal EnableExtensions EnableDelayedExpansion
-for /F "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
-@endlocal & set JVM_CONFIG_MAVEN_PROPS=%JVM_CONFIG_MAVEN_PROPS%
-
-:endReadAdditionalConfig
-
-SET MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
-set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
-set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
-
-set DOWNLOAD_URL="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.4.2/maven-wrapper-0.4.2.jar"
-FOR /F "tokens=1,2 delims==" %%A IN (%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties) DO (
-	IF "%%A"=="wrapperUrl" SET DOWNLOAD_URL=%%B 
-)
-
-@REM Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
-@REM This allows using the maven wrapper in projects that prohibit checking in binary data.
-if exist %WRAPPER_JAR% (
-    echo Found %WRAPPER_JAR%
-) else (
-    echo Couldn't find %WRAPPER_JAR%, downloading it ...
-	echo Downloading from: %DOWNLOAD_URL%
-    powershell -Command "(New-Object Net.WebClient).DownloadFile('%DOWNLOAD_URL%', '%WRAPPER_JAR%')"
-    echo Finished downloading %WRAPPER_JAR%
-)
-@REM End of extension
-
-%MAVEN_JAVA_EXE% %JVM_CONFIG_MAVEN_PROPS% %MAVEN_OPTS% %MAVEN_DEBUG_OPTS% -classpath %WRAPPER_JAR% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*
-if ERRORLEVEL 1 goto error
-goto end
-
-:error
-set ERROR_CODE=1
-
-:end
-@endlocal & set ERROR_CODE=%ERROR_CODE%
-
-if not "%MAVEN_SKIP_RC%" == "" goto skipRcPost
-@REM check for post script, once with legacy .bat ending and once with .cmd ending
-if exist "%HOME%\mavenrc_post.bat" call "%HOME%\mavenrc_post.bat"
-if exist "%HOME%\mavenrc_post.cmd" call "%HOME%\mavenrc_post.cmd"
-:skipRcPost
-
-@REM pause the script if MAVEN_BATCH_PAUSE is set to 'on'
-if "%MAVEN_BATCH_PAUSE%" == "on" pause
-
-if "%MAVEN_TERMINATE_CMD%" == "on" exit %ERROR_CODE%
-
-exit /B %ERROR_CODE%
